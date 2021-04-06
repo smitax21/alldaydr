@@ -1,0 +1,259 @@
+import React, {useState, useEffect} from 'react';
+import {useHistory, withRouter} from 'react-router-dom';
+
+// import CustomButton from '../CustomButton/CustomButton.component'
+import { SignUpContainer, SignUpTitle } from './SignUp.styles'
+// import FormInput from '../Form-Input/FormInput.component'
+
+
+// class SignUp extends React.Component {
+// 	constructor(props) {
+// 		super(props);
+// 		this.state = {user: [
+//                       email, 
+//                       password, 
+//                       first_name, 
+//                       last_name, 
+//                       phone],
+//                   device_detail: [
+//                       device_type, 
+//                       player_id
+//                   ]
+//                   }
+//     };
+	
+	
+// 	componentDidMount() {
+// 		fetch('https://dev-api.alldaydr.com/api/users/sign_up.json', {
+// 			method: 'POST',
+// 			body: JSON.stringify(),
+// 			headers: {
+// 				"Content-type": "application/json"
+// 			}
+// 		}).then(response => {
+// 				return response.json()
+// 			}).then(json => {
+// 				this.setState({
+// 					user:json
+// 				});
+// 			});
+// 	}
+// 	render() {                            
+// 		return (
+// 			<div>
+// 				<SignUpContainer>
+//            <h2>Sign-up Page</h2>
+//              <SignUpTitle> I do not have an account </SignUpTitle>
+//                <span>Sign-up with your email and password</span>
+         
+//                <form >
+//               <input
+//                   type='email' 
+//                   name='email'
+//                   value={this.email} 
+//                   onChange={(e)=> (e.target.value)}
+//                   autoComplete='on'
+//                   placeholder = 'Email'
+//                   required />
+            
+  
+//               <input type="password" 
+//                   value={this.password} 
+//                   name="password"
+//                   onChange={(e)=> (e.target.value)} 
+//                   autoComplete='on'
+//                   placeholder = 'Password'
+//                   required/>
+           
+//               <input 
+//                   type="text" 
+//                   value={this.firstName} 
+//                   name="firstName"
+//                   onChange={(e)=> (e.target.value)} 
+//                   placeholder = 'First Name'
+//                   autoComplete='on'
+//                   required/>
+            
+  
+//               <input 
+//                   type="text" 
+//                   value={this.lastName} 
+//                   name="lastName"
+//                   onChange={(e)=> (e.target.value)}
+//                   placeholder = 'Last Name'
+//                   autoComplete='on'
+//                   required />
+  
+//                 <input 
+//                   type="text" 
+//                   value={this.phone} 
+//                   name="phone"
+//                   onChange={(e)=> (e.target.value)}
+//                   placeholder = 'Phone'
+//                   autoComplete='on'
+//                   required />
+            
+              
+//               <input 
+//                   type="text" 
+//                   value={this.device_type} 
+//                   name="deviceType"
+//                   onChange={(e)=> (e.target.value)}
+//                   placeholder = 'Device-type'
+//                   autoComplete='on'
+//                   required/>
+            
+//               <input type="text" 
+//                   value={this.player_id} 
+//                   name="Id"
+//                   onChange={(e)=> (e.target.value)}
+//                   placeholder = 'Id'
+//                   autoComplete='on'
+//                    />
+            
+//             <button type='submit'> SIGN-UP </button>
+//             </form>
+        
+  
+//           <span>Already have an account? Login <a href='/'>here</a></span>
+//       </SignUpContainer>
+// 			</div>
+// 		)
+// 	}
+// }
+
+// export default SignUp;
+
+const SignUp = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("")
+    const [first_name, setFirstName] = useState("")
+    const [last_name, setLastName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [device_type, setDeviceType] = useState("");
+    const [player_id, setPlayerId] = useState("");
+    // const [isAuth, setIsAuth] = useState(false);
+    const history = useHistory();
+
+    // useEffect(() => {
+    //   if(localStorage.getItem('user-info')) {
+    //     history.push('/')
+    //   }
+    // }, [])
+    
+    let user = [];
+    let device_detail = [];
+    async function register() {
+        
+        // event.preventDefault();
+      let item = {
+        user: {email, 
+              password, 
+              first_name, 
+              last_name, 
+              phone},
+         device_detail: {
+              device_type, 
+              player_id}}
+      console.log(item)
+      
+  
+      let result = await fetch(' https://dev-api.alldaydr.com/api/users/sign_up.json', {
+        method: 'POST',
+        body: JSON.stringify(item),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      })
+      result = await result.json()
+      console.warn("result", result)
+      localStorage.setItem("user-info", JSON.stringify(result))
+      // history.push('/')
+    }
+  
+    return(
+      
+  
+  
+  <SignUpContainer>
+          <h2>Sign-up Page</h2>
+            <SignUpTitle> I do not have an account </SignUpTitle>
+              <span>Sign-up with your email and password</span>
+         
+              <form >
+               <input
+                  type='email' 
+                  name='email'
+                  value={user.email} 
+                  onChange={(e)=> setEmail(e.target.value)}
+                  autoComplete='on'
+                  placeholder = 'Email'
+                  required />
+            
+  
+              <input type="password" 
+                  value={user.password} 
+                  name="password"
+                  onChange={(e)=> setPassword(e.target.value)} 
+                  autoComplete='on'
+                  placeholder = 'Password'
+                  required/>
+           
+              <input 
+                  type="text" 
+                  value={user.first_name} 
+                  name="firstName"
+                  onChange={(e)=> setFirstName(e.target.value)} 
+                  placeholder = 'First Name'
+                  autoComplete='on'
+                  required/>
+            
+  
+              <input 
+                  type="text" 
+                  value={user.last_name} 
+                  name="lastName"
+                  onChange={(e)=> setLastName(e.target.value)}
+                  placeholder = 'Last Name'
+                  autoComplete='on'
+                  required />
+  
+                <input 
+                  type="text" 
+                  value={user.phone} 
+                  name="phone"
+                  onChange={(e)=> setPhone(e.target.value)}
+                  placeholder = 'Phone'
+                  autoComplete='on'
+                  required />
+            
+              
+              <input 
+                  type="text" 
+                  value={device_detail.device_type} 
+                  name="deviceType"
+                  onChange={(e)=> setDeviceType(e.target.value)}
+                  placeholder = 'Device-type'
+                  autoComplete='on'
+                  required/>
+            
+              <input type="text" 
+                  value={device_detail.player_id} 
+                  name="Id"
+                  onChange={(e)=> setPlayerId(e.target.value)}
+                  placeholder = 'Id'
+                  autoComplete='on'
+                   />
+            
+            <button type='submit' onClick={register}> SIGN-UP </button>
+            </form>
+        
+  
+          <span>Already have an account? Login <a href='/'>here</a></span>
+      </SignUpContainer>
+        
+    
+    )}
+
+export default withRouter(SignUp);
